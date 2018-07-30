@@ -1,0 +1,5 @@
+*.sh
+*.npy
+*.pyc
+*~
+.ipynb_checkpoints/
