@@ -1,11 +1,11 @@
 # LF-Net: Learning Local Features from Images
 
-This repository  is tensorflow implementation  for Y.  Ono, E. Trulls,  P. Fua,
+This repository is a tensorflow implementation  for Y.  Ono, E. Trulls, P. Fua,
 K.M. Yi, "LF-Net: Learning Local Features from Images". If you use this code in
-your research, please cite [the paper](https://arxiv.org/abs/1805.09662).
+your research, please cite [the paper](https://arxiv.org/abs/1805.09662). 
+
 
 ![comparison](/teasers/teasers.png)
-
 
 ## Installation
 
@@ -19,9 +19,9 @@ pip install -r requirements.txt
 
 ## Pretrained models and example dataset
 
-Download                              the                             [pretrain
+Download                             the                            [pretrained
 models](http://webhome.cs.uvic.ca/~kyi/files/2018/lf-net/pretrained.tar.gz) and
-an                               the                               [scare_coeur
+the                                                                [scare_coeur
 sequence](http://webhome.cs.uvic.ca/~kyi/files/2018/lf-net/sacre_coeur.tar.gz). Extract
 them to the current folder so that they fall under `release/models/outdoor` for
 example.
