@@ -13,41 +13,35 @@ This code is based on Python3 and tensorflow with CUDA-9.0. For more details on 
 pip install -r requirements.txt
 ```
 
-## Download models and dataset
+## Pretrained models and example dataset
 
-We are not ready to provide models and dataset yet.
-It will include both outdoor and indoor trained models and 1 sequence outdoor dataset as a toy training example.
+**THESE LINKS ARE NOT READY YET!**
+Download the [pretrain
+models](http://webhome.cs.uvic.ca/~kyi/files/2018/lf-net/pretrained.tar.gz) and
+an the [scare_coeur sequence](http://webhome.cs.uvic.ca/~kyi/files/2018/lf-net/sacre_coeur.tar.gz)
 
-If you want to test with other dataset (e.g. [MegaDepth](http://www.cs.cornell.edu/projects/megadepth/)).
-you need to make sure your dataset contains the following stuffs.
-
-1) RGB (or grayscale) images
-1) Depth images
-1) Camera poses (extrinsic matrix)
-1) Camera intrinsic matrix
-
-If your images are multi-view collections, you can generate others from SfM (i.e. [COLMAP](https://colmap.github.io/)).
-But LF-Net doesn't require any data except grayscale images if you just want to run local feature extraction.
+For other datasets, we do not plan to release them at the moment, and please do
+not contact us for explanations on the training phase. We are providing them
+"as is", as a reference implementation. 
 
 ## Running the keypoint extraction demo
 
-If you want to run whole images in a given directory, you just run the following script.
+To run LF-Net for all images in a given directory, simply type:
 
 ```
 python run_lfnet.py --in_dir=images --out_dir=outputs
 ```
 
-Otherwise, you can easily visualize 2-view matching demo in the provided ipython-notebook `notebooks/demo.ipynb` .
+In addition, you can easily do the  2-view matching demo through `notebooks/demo.ipynb` .
 
 ## Training
 
-Once you finish deploying your dataset, you can train the model by doing
+Training code can be found in `train_lfnet.py`. We will **not** provide any
+support for the training process and datasets. All issues related to this topic
+will be closed without answers.
 
-```
-python train_lfnet.py
-```
 
-## Running Examples
+## Some Examples
 
 | Outdoor dataset</br> Top: LF-Net, Btm: SIFT | Indoor dataset </br>Top: LF-Net, Btm: SIFT | Webcam dataset</br>Top: LF-Net, Btm: SIFT |
 |:---------|:--------------------|:----------------|
