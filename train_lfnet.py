@@ -1184,7 +1184,7 @@ if __name__ == '__main__':
                             help='com strength')
     misc_arg.add_argument('--kp_com_strength', type=float, default=1.0,
                             help='com strength')
-    misc_arg.add_argument('--use_nms3d', type=str2bool, default=True,
+    misc_arg.add_argument('--use_nms3d', type=str2bool, default=False,
                             help='use NMS3D to detect keypoints')
 
     config, unparsed = get_config(parser)
