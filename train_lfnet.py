@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Self Supervised Joint Training for Keypoints Detector & Descriptor
 
 from __future__ import print_function
@@ -15,7 +17,7 @@ LOCAL_PATH = './'
 if LOCAL_PATH not in sys.path:
     sys.path.append(LOCAL_PATH)
 
-from datasets import *
+from mydatasets import *
 # from datasets.scenenet import SceneNetPairwiseDataset
 # from datasets.se3dataset import SE3PairwiseDataset
 

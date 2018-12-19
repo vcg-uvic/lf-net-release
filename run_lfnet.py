@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from __future__ import print_function
 import os
 import sys
@@ -9,7 +10,7 @@ import cv2
 from tqdm import tqdm
 import pickle
 
-from datasets import *
+from mydatasets import *
 
 from det_tools import *
 from eval_tools import draw_keypoints

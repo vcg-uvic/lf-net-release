@@ -3,3 +3,6 @@
 *.pyc
 *~
 .ipynb_checkpoints/
+dump_feats/
+logs/
+release/
