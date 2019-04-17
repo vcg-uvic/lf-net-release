@@ -7,6 +7,14 @@ your research, please cite [the paper](https://arxiv.org/abs/1805.09662).
 
 ![comparison](/teasers/teasers.png)
 
+## Important Note regarding the use of ratio tests
+
+Do **NOT** use the ratio test for descriptor matching! The commonly-used ratio 
+test depends on the distribution of descriptor distances, and the threshold 
+differs from one descriptor to another. Commonly used thresholds (0.9 0.7) are
+actually harmful for LF-Net. If you want to use the ratio test, you need to 
+either tune this manually, or use statistical analysis as Lowe did for SIFT.
+
 ## Installation
 
 This code is based on Python3 and tensorflow with CUDA-9.0. For more details on
