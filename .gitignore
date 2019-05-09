@@ -6,3 +6,6 @@
 dump_feats/
 logs/
 release/
+outputs
+sacre_coeur.tar.gz
+pretrained.tar.gz
