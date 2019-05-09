@@ -25,6 +25,21 @@ this by doing
 pip install -r requirements.txt
 ```
 
+## Docker image
+
+We created a self-contained [Docker image](https://hub.docker.com/r/jiangweivcg/lf-net-release-env), for running the keypoint extraction demo easily. Make sure you have the nvidia docker runtime.
+
+To launch a container:
+
+`docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all -ti --name lf-net-container -v /path/to/code_repo:/home jiangweivcg/lf-net-release-env`
+
+To run the ` run_lfnet.py` script inside the container:
+
+`cd /home`
+
+`python run_lfnet.py --in_dir=/path/to/images --out_dir=/path/to/outputs`
+
+
 ## Pretrained models and example dataset
 
 Download                             the                            [pretrained
@@ -68,5 +83,3 @@ will be closed without answers.
 | Outdoor dataset</br> Top: LF-Net, Bottom: SIFT | Indoor dataset </br>Top: LF-Net, Bottom: SIFT | Webcam dataset</br>Top: LF-Net, Bottom: SIFT |
 |:---------|:--------------------|:----------------|
 | ![outdoor](/teasers/sfm_ours_sift.gif)     | ![indoor](/teasers/scannet_ours_sift.gif) | ![webcam](/teasers/webcam_ours_sift.gif) |
-
-
