@@ -17,7 +17,7 @@ either tune this manually, or use statistical analysis as Lowe did for SIFT.
 
 ## Installation
 
-This code is based on Python3 and tensorflow with CUDA-9.0. For more details on
+This code is based on Python3.6.5 and tensorflow with CUDA-8.0. For more details on
 the required  libraries, see  `requirements.txt`. You  can also  easily prepare
 this by doing
 
