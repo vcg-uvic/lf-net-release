@@ -17,6 +17,7 @@ from eval_tools import draw_keypoints
 from common.tf_train_utils import get_optimizer
 from imageio import imread, imsave
 from inference import *
+from utils import embed_breakpoint
 
 
 MODEL_PATH = './models'
@@ -25,7 +26,7 @@ if MODEL_PATH not in sys.path:
 
 
 def build_networks(config, photo, is_training):
-
+    # exec(embed_breakpoint())
     DET = importlib.import_module(config.detector)
     detector = DET.Model(config, is_training)
 
@@ -33,11 +34,8 @@ def build_networks(config, photo, is_training):
         print('Apply instance norm on input photos')
         photos1 = instance_normalization(photo)
 
-    if config.use_nms3d:
-        heatmaps, det_endpoints = build_multi_scale_deep_detector_3DNMS(config, detector, photo, reuse=False)
-    else:
-        heatmaps, det_endpoints = build_multi_scale_deep_detector(config, detector, photo, reuse=False)
-
+    heatmaps, det_endpoints = build_detector_helper(config, detector, photo)
+    # exec(embed_breakpoint())
     # extract patches
     kpts = det_endpoints['kpts']
     batch_inds = det_endpoints['batch_inds']
@@ -50,6 +48,7 @@ def build_networks(config, photo, is_training):
     desc_feats, desc_endpoints = descriptor.build_model(kp_patches, reuse=False) # [B*K,D]
 
     # scale and orientation (extra)
+    # exec(embed_breakpoint())
     scale_maps = det_endpoints['scale_maps']
     ori_maps = det_endpoints['ori_maps'] # cos/sin
     degree_maps, _ = get_degree_maps(ori_maps) # degree (rgb psuedo color code)
@@ -70,6 +69,18 @@ def build_networks(config, photo, is_training):
     }
 
     return ops
+
+def build_detector_helper(config, detector, photo):
+    if config.detector == 'resnet_detector':
+        heatmaps, det_endpoints = build_deep_detector(config, detector, photo, reuse=False)
+    elif config.detector == 'mso_resnet_detector':
+        if config.use_nms3d:
+            heatmaps, det_endpoints = build_multi_scale_deep_detector_3DNMS(config, detector, photo, reuse=False)
+        else:
+            heatmaps, det_endpoints = build_multi_scale_deep_detector(config, detector, photo, reuse=False)
+    else:
+        raise ValueError()
+    return heatmaps, det_endpoints
 
 def main(config):
 
@@ -197,7 +208,7 @@ if __name__ == '__main__':
                             help='model file or directory')
     model_arg.add_argument('--top_k', type=int, default=500,
                             help='number of keypoints')
-    model_arg.add_argument('--max_longer_edge', type=int, default=640,
+    model_arg.add_argument('--max_longer_edge', type=int, default=-1,
                             help='resize image (do nothing if max_longer_edge <= 0)')
 
     tmp_config, unparsed = get_config(parser)
