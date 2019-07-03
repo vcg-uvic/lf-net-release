@@ -17,7 +17,7 @@ from eval_tools import draw_keypoints
 from common.tf_train_utils import get_optimizer
 from imageio import imread, imsave
 from inference import *
-from utils import embed_breakpoint
+from utils import embed_breakpoint, print_opt
 
 
 MODEL_PATH = './models'
@@ -71,15 +71,17 @@ def build_networks(config, photo, is_training):
     return ops
 
 def build_detector_helper(config, detector, photo):
-    if config.detector == 'resnet_detector':
-        heatmaps, det_endpoints = build_deep_detector(config, detector, photo, reuse=False)
-    elif config.detector == 'mso_resnet_detector':
-        if config.use_nms3d:
-            heatmaps, det_endpoints = build_multi_scale_deep_detector_3DNMS(config, detector, photo, reuse=False)
-        else:
-            heatmaps, det_endpoints = build_multi_scale_deep_detector(config, detector, photo, reuse=False)
+
+    # exec(embed_breakpoint())
+    # if config.detector == 'resnet_detector':
+    #     heatmaps, det_endpoints = build_deep_detector(config, detector, photo, reuse=False)
+    # elif config.detector == 'mso_resnet_detector':
+    if config.use_nms3d:
+        heatmaps, det_endpoints = build_multi_scale_deep_detector_3DNMS(config, detector, photo, reuse=False)
     else:
-        raise ValueError()
+        heatmaps, det_endpoints = build_multi_scale_deep_detector(config, detector, photo, reuse=False)
+    # else:
+    #     raise ValueError()
     return heatmaps, det_endpoints
 
 def main(config):
@@ -171,6 +173,7 @@ def main(config):
             imsave(out_img_path, kp_img)
             imsave(out_img_path+'-scl.jpg', scale_img)
             imsave(out_img_path+'-ori.jpg', ori_img)
+            # exec(embed_breakpoint())
             np.savez(out_img_path+'.npz', kpts=outs['kpts'], descs=outs['feats'], size=np.array([height, width]),
                      scales=outs['kpts_scale'], oris=outs['kpts_ori'])
         else:
@@ -224,6 +227,8 @@ if __name__ == '__main__':
     try:
         with open(config_path, 'rb') as f:
             config = pickle.load(f)
+            print_opt(config)
+            # exec(embed_breakpoint())
     except:
         raise ValueError('Fail to open {}'.format(config_path))
 
