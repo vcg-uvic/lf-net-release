@@ -26,7 +26,7 @@ if MODEL_PATH not in sys.path:
 
 
 def build_networks(config, photo, is_training):
-    # exec(embed_breakpoint())
+
     DET = importlib.import_module(config.detector)
     detector = DET.Model(config, is_training)
 
@@ -35,7 +35,7 @@ def build_networks(config, photo, is_training):
         photos1 = instance_normalization(photo)
 
     heatmaps, det_endpoints = build_detector_helper(config, detector, photo)
-    # exec(embed_breakpoint())
+
     # extract patches
     kpts = det_endpoints['kpts']
     batch_inds = det_endpoints['batch_inds']
@@ -48,7 +48,6 @@ def build_networks(config, photo, is_training):
     desc_feats, desc_endpoints = descriptor.build_model(kp_patches, reuse=False) # [B*K,D]
 
     # scale and orientation (extra)
-    # exec(embed_breakpoint())
     scale_maps = det_endpoints['scale_maps']
     ori_maps = det_endpoints['ori_maps'] # cos/sin
     degree_maps, _ = get_degree_maps(ori_maps) # degree (rgb psuedo color code)
@@ -72,7 +71,7 @@ def build_networks(config, photo, is_training):
 
 def build_detector_helper(config, detector, photo):
 
-    # exec(embed_breakpoint())
+
     # if config.detector == 'resnet_detector':
     #     heatmaps, det_endpoints = build_deep_detector(config, detector, photo, reuse=False)
     # elif config.detector == 'mso_resnet_detector':
@@ -173,7 +172,7 @@ def main(config):
             imsave(out_img_path, kp_img)
             imsave(out_img_path+'-scl.jpg', scale_img)
             imsave(out_img_path+'-ori.jpg', ori_img)
-            # exec(embed_breakpoint())
+
             np.savez(out_img_path+'.npz', kpts=outs['kpts'], descs=outs['feats'], size=np.array([height, width]),
                      scales=outs['kpts_scale'], oris=outs['kpts_ori'])
         else:
@@ -228,7 +227,6 @@ if __name__ == '__main__':
         with open(config_path, 'rb') as f:
             config = pickle.load(f)
             print_opt(config)
-            # exec(embed_breakpoint())
     except:
         raise ValueError('Fail to open {}'.format(config_path))
 

@@ -68,12 +68,13 @@ def build_multi_scale_deep_detector(config, detector, photos, reuse=False, name=
 
         # Detector
         score_maps_list, det_endpoints = detector.build_model(photos, reuse=reuse)
-        # exec(embed_breakpoint())
-        score_maps_list = [score_maps_list]
-        # scale_factors = [1.41421356, 1.18920712, 1.        , 0.84089642, 0.70710678]
-        scale_factors = [1.]
-        # scale_factors = det_endpoints['scale_factors']
-        # exec(embed_breakpoint())
+        
+        if isinstance(score_maps_list,list):
+            scale_factors = det_endpoints['scale_factors']
+        else:
+            score_maps_list = [score_maps_list]
+            scale_factors = [1.]
+
         scale_factors_tensor = tf.constant(scale_factors, dtype=tf.float32)
         num_scale = len(score_maps_list)
 
@@ -166,7 +167,7 @@ def build_multi_scale_deep_detector_3DNMS(config, detector, photos, reuse=False,
         score_maps_list, det_endpoints = detector.build_model(photos, reuse=reuse)
 
         scale_factors = det_endpoints['scale_factors']
-        exec(embed_breakpoint())
+
         scale_factors_tensor = tf.constant(scale_factors, dtype=tf.float32)
         num_scale = len(score_maps_list)
 
