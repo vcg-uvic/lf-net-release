@@ -5,6 +5,8 @@ import numpy as np
 import cv2
 import scipy
 
+import utils
+
 def compute_various_matching_score(match_dist_all, kpvis2w, dist_thresh_list):
     assert len(match_dist_all) == len(kpvis2w)
     # assert kpvis2w.max() == 1.0
@@ -296,4 +298,3 @@ def compute_distance(pts1, pts2):
     min_args_2to1 = distance.argmin(axis=0)
     
     return min_dists_1to2, min_args_1to2, min_dists_2to1, min_args_2to1
-

@@ -1,6 +1,8 @@
 import tensorflow as tf
 from det_tools import *
 from spatial_transformer import transformer_crop
+from utils import embed_breakpoint
+
 
 def build_deep_detector(config, detector, photos, reuse=False, name='DeepDet'):
     with tf.name_scope(name):
@@ -27,6 +29,7 @@ def build_deep_detector(config, detector, photos, reuse=False, name='DeepDet'):
         kpts, batch_inds, num_kpts = extract_keypoints(top_ks)
 
         if det_endpoints['mso'] == True:
+        # if True:
             print('Use multi scale and orientation...')
             scale_log_maps = det_endpoints['scale_maps']
             scale_maps = tf.exp(scale_log_maps)
@@ -39,6 +42,10 @@ def build_deep_detector(config, detector, photos, reuse=False, name='DeepDet'):
             ori_maps = None
             kpts_scale = None
             kpts_ori = None
+            # scale_maps = det_endpoints['scale_maps']
+            # ori_maps = det_endpoints['ori_maps']
+            # kpts_scale = tf.squeeze(batch_gather_keypoints(scale_maps, batch_inds, kpts), axis=1)
+            # kpts_ori = batch_gather_keypoints(ori_maps, batch_inds, kpts)
 
         det_endpoints['logits'] = logits
         det_endpoints['top_ks'] = top_ks
@@ -61,8 +68,13 @@ def build_multi_scale_deep_detector(config, detector, photos, reuse=False, name=
 
         # Detector
         score_maps_list, det_endpoints = detector.build_model(photos, reuse=reuse)
+        
+        if isinstance(score_maps_list,list):
+            scale_factors = det_endpoints['scale_factors']
+        else:
+            score_maps_list = [score_maps_list]
+            scale_factors = [1.]
 
-        scale_factors = det_endpoints['scale_factors']
         scale_factors_tensor = tf.constant(scale_factors, dtype=tf.float32)
         num_scale = len(score_maps_list)
 
@@ -155,6 +167,7 @@ def build_multi_scale_deep_detector_3DNMS(config, detector, photos, reuse=False,
         score_maps_list, det_endpoints = detector.build_model(photos, reuse=reuse)
 
         scale_factors = det_endpoints['scale_factors']
+
         scale_factors_tensor = tf.constant(scale_factors, dtype=tf.float32)
         num_scale = len(score_maps_list)
 

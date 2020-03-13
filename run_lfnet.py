@@ -17,6 +17,7 @@ from eval_tools import draw_keypoints
 from common.tf_train_utils import get_optimizer
 from imageio import imread, imsave
 from inference import *
+from utils import embed_breakpoint, print_opt
 
 
 MODEL_PATH = './models'
@@ -33,10 +34,7 @@ def build_networks(config, photo, is_training):
         print('Apply instance norm on input photos')
         photos1 = instance_normalization(photo)
 
-    if config.use_nms3d:
-        heatmaps, det_endpoints = build_multi_scale_deep_detector_3DNMS(config, detector, photo, reuse=False)
-    else:
-        heatmaps, det_endpoints = build_multi_scale_deep_detector(config, detector, photo, reuse=False)
+    heatmaps, det_endpoints = build_detector_helper(config, detector, photo)
 
     # extract patches
     kpts = det_endpoints['kpts']
@@ -70,6 +68,20 @@ def build_networks(config, photo, is_training):
     }
 
     return ops
+
+def build_detector_helper(config, detector, photo):
+
+
+    # if config.detector == 'resnet_detector':
+    #     heatmaps, det_endpoints = build_deep_detector(config, detector, photo, reuse=False)
+    # elif config.detector == 'mso_resnet_detector':
+    if config.use_nms3d:
+        heatmaps, det_endpoints = build_multi_scale_deep_detector_3DNMS(config, detector, photo, reuse=False)
+    else:
+        heatmaps, det_endpoints = build_multi_scale_deep_detector(config, detector, photo, reuse=False)
+    # else:
+    #     raise ValueError()
+    return heatmaps, det_endpoints
 
 def main(config):
 
@@ -160,6 +172,7 @@ def main(config):
             imsave(out_img_path, kp_img)
             imsave(out_img_path+'-scl.jpg', scale_img)
             imsave(out_img_path+'-ori.jpg', ori_img)
+
             np.savez(out_img_path+'.npz', kpts=outs['kpts'], descs=outs['feats'], size=np.array([height, width]),
                      scales=outs['kpts_scale'], oris=outs['kpts_ori'])
         else:
@@ -197,7 +210,7 @@ if __name__ == '__main__':
                             help='model file or directory')
     model_arg.add_argument('--top_k', type=int, default=500,
                             help='number of keypoints')
-    model_arg.add_argument('--max_longer_edge', type=int, default=640,
+    model_arg.add_argument('--max_longer_edge', type=int, default=-1,
                             help='resize image (do nothing if max_longer_edge <= 0)')
 
     tmp_config, unparsed = get_config(parser)
@@ -213,6 +226,7 @@ if __name__ == '__main__':
     try:
         with open(config_path, 'rb') as f:
             config = pickle.load(f)
+            print_opt(config)
     except:
         raise ValueError('Fail to open {}'.format(config_path))
 
