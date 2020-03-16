@@ -53,6 +53,9 @@ For other datasets, we do not plan to release them at the moment. Please do not
 contact us for  explanations on the training phase. We  are providing them **as
 is** as a reference implementation.
 
+## Updates new pretrained models
+Download [pretrained model without rotation augmentation ](https://gfx.uvic.ca/pubs/2018/ono2018lfnet/lfnet-norotaug.tar.gz)
+
 ### Updates since the arXiv version
 
 The provided pre-trained  models are trained with full  360 degree augmentation
