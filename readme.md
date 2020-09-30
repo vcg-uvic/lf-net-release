@@ -54,7 +54,7 @@ contact us for  explanations on the training phase. We  are providing them **as
 is** as a reference implementation.
 
 ## Updates new pretrained models
-Download [pretrained model without rotation augmentation ](https://www.cs.ubc.ca/research/kmyi_data/files/2018/lf-net/lfnet-norotaug.tar)
+Download [pretrained model without rotation augmentation ](https://www.cs.ubc.ca/research/kmyi_data/files/2018/lf-net/lfnet-norotaug.tar.gz)
 
 ### Updates since the arXiv version
 
