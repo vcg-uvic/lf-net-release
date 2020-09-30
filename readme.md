@@ -43,9 +43,9 @@ To run the ` run_lfnet.py` script inside the container:
 ## Pretrained models and example dataset
 
 Download                             the                            [pretrained
-models](http://webhome.cs.uvic.ca/~kyi/files/2018/lf-net/pretrained.tar.gz) and
+models](https://www.cs.ubc.ca/research/kmyi_data/files/2018/lf-net/pretrained.tar.gz) and
 the                                                                [scare_coeur
-sequence](http://webhome.cs.uvic.ca/~kyi/files/2018/lf-net/sacre_coeur.tar.gz). Extract
+sequence](https://www.cs.ubc.ca/research/kmyi_data/files/2018/lf-net/sacre_coeur.tar.gz). Extract
 them to the current folder so that they fall under `release/models/outdoor` for
 example.
 
@@ -54,7 +54,7 @@ contact us for  explanations on the training phase. We  are providing them **as
 is** as a reference implementation.
 
 ## Updates new pretrained models
-Download [pretrained model without rotation augmentation ](https://gfx.uvic.ca/pubs/2018/ono2018lfnet/lfnet-norotaug.tar.gz)
+Download [pretrained model without rotation augmentation ](https://www.cs.ubc.ca/research/kmyi_data/files/2018/lf-net/lfnet-norotaug.tar.gz)
 
 ### Updates since the arXiv version
 
