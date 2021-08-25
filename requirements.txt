@@ -5,6 +5,6 @@ opencv-python==3.4.0.12
 pandas==0.20.1
 scipy==1.0.0
 six==1.11.0
-tensorflow-gpu==1.4.0
+tensorflow-gpu==2.5.1
 tqdm==4.11.2
 h5py
